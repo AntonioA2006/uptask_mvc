@@ -1,0 +1,9 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+.mensaje{
+    padding: 7rem;
+    .uptask{
+        @include m.textodegradado(v.$naranja)
+    }
+   
+}
