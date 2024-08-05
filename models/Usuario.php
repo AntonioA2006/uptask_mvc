@@ -28,8 +28,15 @@ class Usuario extends ActiveRecord{
         
     }
     public function setErroresForServicesLogin(){
+        $options = [
+            'nombre' => $this->nombre,
+            'email' =>$this->email,
+            'password' => $this->password,
+            "password2" => $this->password2
+
+        ];
         
-        LoginServices::getInfo($this->nombre, $this->email, $this->password, $this->password2);
+        LoginServices::getInfo($options);
     }
     public  function setPasswordEncrypt(){
         $this->password = LoginServices::password_encrypt();

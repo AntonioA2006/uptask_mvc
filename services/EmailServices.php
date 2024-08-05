@@ -79,7 +79,7 @@ use PHPMailer\PHPMailer\PHPMailer;
                 
             
             // Configuración del protocolo de seguridad
-            if ($_ENV['EMAIL_PORT'] == 465) {
+            if ($email->Port == 465) {
                 $email->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             } else {
                 $email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -94,7 +94,7 @@ use PHPMailer\PHPMailer\PHPMailer;
     
             $contenido = '<html> ';
             $contenido.= "<p>Hola: ". $this->nombre ." has solicitado restablecer tu password</p>";
-            $contenido.= "<p>Presiona aqui: <a href = '".'http://localhost:8080'."/recuperar?token=".$this->token."'>Restablece tu password</a></p>";
+            $contenido.= "<p>Presiona aqui: <a href = '".'http://localhost:8080'."/restablecer?token=".$this->token."'>Restablece tu password</a></p>";
             $contenido.= "<p>Si tu no solistaste este registro solo ignoralo</p>";
             $contenido .= '</html>';
     

@@ -9,12 +9,11 @@ class LoginServices implements interfaceServices{
     private static $password2 = '';
     private static $errors = [];
 
-    public static function getInfo(string $nombre,string $email, string $password, string $password2)
-    {
-            self::$nombre = $nombre;
-            self::$email = $email;
-            self::$password = $password;
-            self::$password2 = $password2;
+    public static function getInfo($options = []) 
+    {   
+            foreach($options as $key => $value){
+                self::$$key = $value;
+            }
     }
     public static function validar():array
     {   
@@ -80,5 +79,14 @@ class LoginServices implements interfaceServices{
     }
     public static function setAlerta($tipo,$msg){
         self::$errors[$tipo][] = $msg;
+    }
+    public static function PasswordValidation(){
+        if(!self::$password){
+            self::$errors['error'][] = 'El password es oobligatorio';
+        } 
+        if(strlen(self::$password) < 6){
+            self::$errors['error'][] = 'El password debe ser mayor a 6 caracteres';
+        }
+        return self::$errors;
     }
 }

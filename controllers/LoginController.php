@@ -9,15 +9,41 @@ use Services\LoginServices;
 class LoginController{
 
     public static function index (Router $router){
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            # code...
+            $usuario = new Usuario($_POST);
+            $usuario->setErroresForServicesLogin();
+            $alertas = LoginServices::EmailValidation();
+            $alertas = LoginServices::PasswordValidation();
+            if (empty($alertas)) {
+                $usuario = Usuario::where('email', $usuario->email);
+                if (!$usuario || !$usuario->confirmado){
+                    LoginServices::setAlerta('error', 'El usuario no existe o  no esta confirmado');
+                }else{
+                    if (password_verify($_POST['password'],$usuario->password)) {
+                        session_start();
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre;
+                        $_SESSION['login'] = true;
+
+                        header("Location: /dashboard");
+                        
+                    }else{
+                        LoginServices::setAlerta('error', 'El password es incorrecto');
+                    }
+                }
+            }
         }
+        $alertas = LoginServices::getErrors();
         $router->render('auth/login',[
-            'titulo'=> "Iniciar Sesion"
+            'titulo'=> "Iniciar Sesion",
+            'alertas' => $alertas
         ]);
     }
     public static function logout(){
-
+        session_start();
+        $_SESSION = [];
+        header("Location: / ");
     }
     public static function crear (Router $router){
         $usuario = new Usuario;
@@ -76,11 +102,40 @@ class LoginController{
         ]);
     }
     public static function restablecer (Router $router){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            # code...
+        $mostrar = true;
+        $token = s($_GET['token']);
+
+        if (!$token) {
+           header("Location: /");
         }
+        $usuario = Usuario::where('token', $token);
+
+        if (empty($usuario)) {
+                LoginServices::setAlerta('error', 'El token es invalido');
+                $mostrar = false;
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $usuario->sincronizar($_POST);
+            $usuario->setErroresForServicesLogin();
+           $alertas = LoginServices::PasswordValidation();
+
+           if (empty($alertas)) {
+              $usuario->password = LoginServices::password_encrypt();
+              $usuario->token = null;
+              unset($usuario->password2);
+              $resultado = $usuario->guardar();
+              if ($resultado) {
+                    header("Location: /");
+              }
+           }
+            
+        }
+        $alertas = LoginServices::getErrors();
         $router->render('auth/restablecer',[
-            "titulo" => "restablece tu password"
+            "titulo" => "restablece tu password",
+            'alertas' => $alertas,
+            'mostrar' => $mostrar
         ]);
     }
     public static function mensaje (Router $router){
