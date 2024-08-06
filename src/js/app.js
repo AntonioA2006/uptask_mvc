@@ -17,3 +17,12 @@ if(cerrarMenuBtn) {
         }, 1000);
     })
 }
+//eliminar la clase de mostr
+
+
+window.addEventListener('resize',function(){
+    const anchoPantalla = document.body.clientWidth;
+        if (anchoPantalla >= 768) {
+                sidebar.classList.remove('mostrar');
+        }
+}); 

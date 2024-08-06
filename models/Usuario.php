@@ -13,6 +13,8 @@ class Usuario extends ActiveRecord{
     public $nombre;
     public $email;
     public $password;
+    public $password_actual;
+    public $password_nuevo;
     public $password2;
     public $token;
     public $confirmado;
@@ -23,8 +25,37 @@ class Usuario extends ActiveRecord{
         $this->nombre = $args['nombre']??'';
         $this->email = $args['email']??'';
         $this->password = $args['password']??'';
+        $this->password_actual = $args['password_actual']??'';
+        $this->password_nuevo = $args['password_nuevo']??'';
+        $this->password = $args['password']??'';
         $this->token = $args['token']??'';
         $this->confirmado = $args['confirmado']?? 0 ;
+        
+    }
+    public function comprobar_password(){
+        return password_verify($this->password_actual, $this->password);
+    }
+    public function nuevo_password(){
+        if (!$this->password_actual) {
+            self::$alertas['error'][] = 'ocupas ingresar tu password actual';
+        }
+        if (!$this->password_nuevo) {
+            self::$alertas['error'][] = 'ocupas ingresar un password nuevo';
+        }
+        if (strlen($this->password_nuevo) < 6) {
+            self::$alertas['error'][] = 'ocupas ingresar un password con mas de 6 caracteres';
+        }
+        return self::$alertas;
+    }
+    public function validarPerfil()
+    {
+            if (!$this->nombre) {
+                self::$alertas['error'][]  = 'el nombre es obligatorio';
+            }
+            if (!$this->email) {
+                self::$alertas['error'][]  = 'el E-mail es obligatorio';
+            }
+            return self::$alertas;
         
     }
     public function setErroresForServicesLogin(){

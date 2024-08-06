@@ -12,4 +12,11 @@
             <a class="<?php echo ($titulo === 'tu perfil')? 'activo' : '' ;?>" href="/perfil">Perfil</a>
     </nav>
 
+    <div class="cerrar-sesion-mobile">
+
+        <a href="/logout" class="cerrar-sesion">cerrar sesion</a>
+
+
+    </div>
+
 </aside>

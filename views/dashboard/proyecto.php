@@ -6,6 +6,7 @@
 
         <div class="contenedor-nueva-tarea">
             <button type="button" class="agregar-tarea" id="agregar-tarea">&#43;Nueva tarea</button>
+            <button type="button" class="eliminar-proyecto" id="eliminar-proyecto">-Eliminar proyecto</button>
         </div>
         <div id="filtros" class="filtros">
             <div class="filtros-inputs">

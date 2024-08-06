@@ -6,7 +6,7 @@
 <p class="no-proyectos">
     no Hay Proyectos Aun 
 </p>
-<a href="/proyecto">comienza creando uno</a>
+<a href="/crear-proyecto">comienza creando uno</a>
 <?php } else{ ?>
 
         <ul class="listado-proyectos">

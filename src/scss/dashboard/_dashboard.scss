@@ -7,6 +7,7 @@
     @include m.tablet{
         display: flex;
         height: 100vh;
+       
     }
     .principal{
         flex: 1;
@@ -29,5 +30,15 @@
             font-weight: bold;
             @include m.boton(v.$indigo,v.$blanco);
         }
+    }
+    .enlace{
+        
+        @include m.boton(v.$indigo, v.$blanco);
+        @include m.tablet{
+            margin-left: 5rem;
+            margin-top: 5rem;
+            @include m.boton-inline(v.$indigo, v.$blanco);
+        }
+        
     }
 }

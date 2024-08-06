@@ -39,6 +39,26 @@
         cursor: pointer;
     }
 }
+@mixin boton-inline($bgColor, $colorTexto) {
+    background-color: $bgColor;
+    padding: 1.5rem 4rem;
+    color: $colorTexto;
+    font-size: 1.6rem;
+    display: inline-block;
+    font-weight: 700;
+    border: none;
+    transition-property: background-color;
+    transition-duration: .3s;
+    text-align: center;
+   
+    display: inline;
+    width: 95%;
+    
+    &:hover {
+        background-color: darken( $bgColor, 10% );
+        cursor: pointer;
+    }
+}
 
 @mixin grid($columnas, $espaciado ) {
     display: grid;

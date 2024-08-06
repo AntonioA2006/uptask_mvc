@@ -87,7 +87,44 @@ const FilterTasks = (function(){
         
     }
 })()
+const confirmDeleteProject = (function(){
+    return (projectName)=>{
+        Swal.fire({
+            title: "CONFIRMA escribiendo el nombre del proyecto actual",
+            input: "text",
+            inputAttributes: {
+              autocapitalize: "off"
+            },
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            showLoaderOnConfirm: true,
+            preConfirm  : async (project)=>{
+                
+                if (projectName.toLowerCase().trim() !== project.toLowerCase().trim()) {
+                    //TODO:: klanzar alerta en caso de que el usuario no es criba bien el nombre
+                    return Swal.fire({
+                        icon: "error",
+                        title: "Nombre incorrecto"
+                      });
+                }else{
+                    ApiHandlerDeleteProject()
+                    .then(Response => {
+                        const {result ,  mensaje } = Response
+                        Swal.fire({
+                            icon: result,
+                            title: mensaje
+                        }).then(result => {
+                            return window.location.href = '/dashboard'
+                        })
+                            
+                    
+                    })
 
+                }
+            }
+         })
+}
+})()
 
 
 
@@ -95,8 +132,18 @@ const FilterTasks = (function(){
 const Modal = (function(){
         const nuevaTareaBtn = document.querySelector('#agregar-tarea');
         nuevaTareaBtn.addEventListener('click', ()=>{
+
+           
             mostrarFormulario()
         });
+        //sleciona el nombre del proyecto acutal
+        const nombreProyecto  = document.querySelector('#tituloProyecto').value;
+
+        const eliminarProyecto = document.querySelector('#eliminar-proyecto');
+        eliminarProyecto.addEventListener('click', function(){
+            //no c 
+            confirmDeleteProject(nombreProyecto);   
+        }); 
         function mostrarFormulario(event = false, tarea = {}){
            
             
@@ -456,4 +503,27 @@ const ApiHandlerChageTask = (function(){
                     ChageTaskEstate(e)
             }    
     }
+})()
+const ApiHandlerDeleteProject = (function (){
+        const datos = new FormData();
+        datos.append('url', getProject.get());
+        const url = 'api/proyecto/eliminar';
+
+        return async ()=>{
+                try {
+                    const respuesta = await fetch(url, {
+                        method : "POST",
+                        body: datos
+                    })
+                    const resultado  = await respuesta.json();
+                        
+                    return resultado;
+        
+                } catch (error) {
+
+                    console.log(error)
+    
+                }            
+            
+        }
 })()

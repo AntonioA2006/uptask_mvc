@@ -62,10 +62,12 @@
     }
     &-nav{
             margin-top: 5rem;
-            a{
+            a{      
+               margin-left: 2rem;
+                font-size: 2.4rem;
                 color: v.$blanco;
                 display: block;
-                margin-bottom: 1.5rem;
+                margin-bottom: 2rem;
                 padding: .7rem;
                 transition: background-color 300ms ease-out;
                 &:hover,
@@ -74,7 +76,26 @@
                     border-radius: .5rem;   
                     
                 }
-
+                @include m.tablet{
+                    margin-left: 0;
+                    font-size: 2rem;
+                    margin-bottom: 1.5rem;
+                }
             }
+    }
+
+    .cerrar-sesion-mobile{
+        margin-bottom: 2rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    
+        @include m.tablet{
+            display: none;
+        }
+        .cerrar-sesion{
+            @include m.boton(v.$indigo, v.$blanco);
+        }
     }
 }

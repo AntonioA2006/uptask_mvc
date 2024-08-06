@@ -10,4 +10,5 @@
 
             <div class="contenido">
                     <h2 class="nombre-pagina"><?php echo $titulo ?></h2>
+                    <input type="hidden" id="tituloProyecto" value="<?php echo $titulo ?>">
      
