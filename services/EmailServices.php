@@ -25,11 +25,11 @@ use PHPMailer\PHPMailer\PHPMailer;
         try {
             $email = new PHPMailer();
             $email->isSMTP();
-            $email->Host = 'sandbox.smtp.mailtrap.io';
+            $email->Host = $_ENV['EMAIL_HOST'];
             $email->SMTPAuth = true;
-            $email->Port = 2525;
-            $email->Username = '441f3f81afab7e';
-            $email->Password = '6ed65e192434b8';
+            $email->Port = $_ENV['EMAIL_PORT'];
+            $email->Username = $_ENV['EMAIL_USER'];
+            $email->Password = $_ENV['EMAIL_PASSWORD'];
                 
             // Configuración del protocolo de seguridad
             if ($_ENV['EMAIL_PORT'] == 465) {
@@ -71,11 +71,11 @@ use PHPMailer\PHPMailer\PHPMailer;
         try{
             $email = new PHPMailer();
             $email->isSMTP();
-            $email->Host = 'sandbox.smtp.mailtrap.io';
+            $email->Host = $_ENV['EMAIL_HOST'];
             $email->SMTPAuth = true;
-            $email->Port = 2525;
-            $email->Username = '441f3f81afab7e';
-            $email->Password = '6ed65e192434b8';
+            $email->Port = $_ENV['EMAIL_PORT'];
+            $email->Username = $_ENV['EMAIL_USER'];
+            $email->Password = $_ENV['EMAIL_PASSWORD'];
                 
             
             // Configuración del protocolo de seguridad
